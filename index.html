@@ -1,3 +1,9 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="assets/logo.png">
 <title>Sai Prabhu Associates</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Sai Prabhu Associates, Shirdi. Er. Pratap Shinde, civil engineering consultant: residential planning, structural design, estimates, government approvals and site supervision.">
@@ -27,6 +33,9 @@
   color-scheme:light;
 }
 *{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0}
+img{max-width:100%}
 [hidden]{display:none!important}
 html{scroll-padding-top:80px}
 body{background:var(--bg);color:var(--slate);font-family:var(--f-text);font-size:1.0625rem;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -109,6 +118,7 @@ a{color:inherit}
 .svc li{display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:baseline;padding-block:16px;border-bottom:1px solid var(--hair)}
 .svc li span:nth-child(2){font-size:1.15rem;color:var(--ink)}
 @media (max-width:860px){.about{grid-template-columns:1fr;gap:40px}}
+@media (max-width:560px){.svc li{grid-template-columns:40px 1fr}.svc li span:nth-child(3){display:none}}
 
 /* projects */
 .gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:56px 32px}
@@ -125,6 +135,7 @@ button.work:hover img{transform:scale(1.04)}
 .ph-frame .ph-note{position:absolute;left:16px;bottom:14px}
 .work .meta{display:flex;justify-content:space-between;gap:16px;align-items:baseline;border-top:1px solid var(--hair);padding-top:14px}
 .work h3{font-size:1.5rem}
+@media (max-width:560px){.work .meta{flex-direction:column;gap:6px}}
 
 /* credentials */
 .creds{border-top:1px solid var(--hair-strong)}
@@ -188,6 +199,20 @@ form.enq{display:grid;grid-template-columns:1fr 1fr;gap:34px 28px}
 .lb-cap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .lb-x{position:absolute;top:calc(16px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px));width:46px;height:46px;border-radius:50%;border:1px solid var(--hair-strong);background:#fff;color:var(--ink);font-size:20px;cursor:pointer}
 
+/* phones: slightly larger text so nothing feels tiny */
+@media (max-width:700px){
+  body{font-size:1.125rem}
+  .label,.nav a,.cred .pending,.copy{font-size:.8rem;letter-spacing:.2em}
+  .btn,.link,.fab{font-size:.8rem;letter-spacing:.18em}
+  .card p{font-size:1.125rem}
+  .card p.label,.head p.label{font-size:.8rem}
+  .head p{font-size:1.15rem}
+  .row .val{font-size:1.2rem}
+  .f input,.f select,.f textarea{font-size:1.125rem}
+  .svc li span:nth-child(2){font-size:1.25rem}
+  .work h3{font-size:1.7rem}
+  .cred h3{font-size:1.75rem}
+}
 /* quiet reveal where scroll-driven animation exists */
 @supports (animation-timeline:view()){@media (prefers-reduced-motion:no-preference){
   .rv{animation:rv linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
@@ -196,6 +221,8 @@ form.enq{display:grid;grid-template-columns:1fr 1fr;gap:34px 28px}
 @media (prefers-reduced-motion:reduce){.cue i{animation:none}}
 </style>
 
+</head>
+<body>
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Sai Prabhu Associates, back to top"><img src="assets/logo.png" alt="Sai Prabhu Associates"></a>
@@ -287,7 +314,7 @@ form.enq{display:grid;grid-template-columns:1fr 1fr;gap:34px 28px}
     </div>
     <div class="about-copy rv">
       <p class="label rule">The practice</p>
-         <p class="big">From soil to slab to skyline.</p>
+      <p class="big">From soil to slab to skyline.</p>
       <p>We stay with every project from the first conversation about a plot to the last visit on site. Planning, structure, cost, permissions and supervision are handled under one roof, so nothing is lost between stages.</p>
       <ul class="svc">
         <li><span class="label">I</span><span>Residential planning</span><span class="label">Plans · elevations</span></li>
@@ -756,7 +783,9 @@ build();
     const up = norm(mix([0, 1, 0], right, Math.sin(roll) * (1 - k)));
     const asp = W / H;
     const fov = (asp < 1 ? 74 : 58) * Math.PI / 180;
-    const vp = mul(persp(fov, asp, .5, 4000), look(pos, lookT, up));
+    const proj = persp(fov, asp, .5, 4000);
+    if (asp < 1) proj[9] = -0.42;                 // portrait: lift the horizon so the city fills the screen
+    const vp = mul(proj, look(pos, lookT, up));
     gl.clearColor(1, 1, 1, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.uniformMatrix4fv(U.vp, false, new Float32Array(vp));
     gl.uniform1f(U.p, u); gl.uniform3f(U.cam, pos[0], pos[1], pos[2]);
@@ -799,3 +828,5 @@ build();
   window.__city = { draw: u => { cur = target = u; draw(u); }, lines: lineBuf.n / 2, tris: triBuf.n / 3 };
 })();
 </script>
+</body>
+</html>
