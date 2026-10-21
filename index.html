@@ -1,0 +1,801 @@
+<title>Sai Prabhu Associates</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Sai Prabhu Associates, Shirdi. Er. Pratap Shinde, civil engineering consultant: residential planning, structural design, estimates, government approvals and site supervision.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Della+Respira&family=Italiana&family=Jost:wght@300;400;500&display=swap">
+<style>
+/* Layout: one long white drafting sheet. The opening is a scroll-driven flight through a city that is
+   planned in cyan and then drawn up in graphite line; the rest of the page is quiet, hairline-ruled and generous. */
+:root{
+  --bg:#ffffff;          /* page */
+  --off:#f7f7f5;         /* off-white bands */
+  --mist:#eef0f1;        /* placeholder fills */
+  --hair:rgba(21,23,26,.09);
+  --hair-strong:rgba(21,23,26,.18);
+  --grey:#8d9298;        /* labels */
+  --slate:#5a6067;       /* body text */
+  --ink:#15171a;         /* headings, the little black */
+  --cyan:#43b7cf;        /* accent lines */
+  --cyan-ink:#1b8ea7;    /* accent text on white */
+
+  --f-display:"Italiana","Didot","Bodoni 72","Times New Roman",serif;      /* stand-in for Dream Avenue */
+  --f-text:"Della Respira","Georgia","Times New Roman",serif;
+  --f-label:"Jost","Futura","Century Gothic","Helvetica Neue",Arial,sans-serif;
+
+  --wrap:1200px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-padding-top:80px}
+body{background:var(--bg);color:var(--slate);font-family:var(--f-text);font-size:1.0625rem;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;color:var(--ink);margin:0;line-height:1.08;letter-spacing:.01em;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:1px solid var(--cyan-ink);outline-offset:4px}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.label{font-family:var(--f-label);font-size:.72rem;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:var(--grey)}
+.label.cyan{color:var(--cyan-ink)}
+.rule{display:flex;align-items:center;gap:14px}
+.rule::before{content:"";width:36px;height:1px;background:var(--cyan)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:12px;font-family:var(--f-label);font-size:.74rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;padding:16px 26px;border:1px solid var(--ink);color:var(--ink);background:transparent;cursor:pointer;transition:background .3s,color .3s,border-color .3s}
+.btn:hover{background:var(--ink);color:var(--bg)}
+.btn.solid{background:var(--ink);color:var(--bg)}
+.btn.solid:hover{background:transparent;color:var(--ink)}
+.btn svg{width:16px;height:16px}
+.link{font-family:var(--f-label);font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;color:var(--cyan-ink);border-bottom:1px solid currentColor;padding-bottom:3px}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(255,255,255,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--hair)}
+.top .wrap{display:flex;align-items:center;gap:28px;height:72px}
+.brand img{height:34px;width:auto;display:block}
+.nav{display:flex;gap:30px;margin-left:auto}
+.nav a{font-family:var(--f-label);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;color:var(--slate);transition:color .25s}
+.nav a:hover{color:var(--cyan-ink)}
+.top .btn{padding:11px 18px}
+@media (max-width:860px){.nav{display:none}.top .btn{margin-left:auto}.brand img{height:30px}}
+
+/* ============ the flight ============ */
+.fly{position:relative;background:var(--bg)}
+.stage{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);height:calc(100vh - 72px - env(safe-area-inset-top,0px));height:calc(100svh - 72px - env(safe-area-inset-top,0px));overflow:hidden}
+.stage canvas{display:block;width:100%;height:100%}
+.stage::after{content:"";position:absolute;inset:auto 0 0;height:90px;background:linear-gradient(transparent,var(--bg));pointer-events:none}
+.stage.nogl{background:repeating-linear-gradient(0deg,transparent 0 39px,var(--hair) 39px 40px),repeating-linear-gradient(90deg,transparent 0 39px,var(--hair) 39px 40px)}
+.hud{position:absolute;right:max(20px,env(safe-area-inset-right,0px));bottom:26px;z-index:2;display:flex;flex-direction:column;align-items:flex-end;gap:8px;pointer-events:none}
+.hud .bar{width:140px;height:1px;background:var(--hair-strong);position:relative}
+.hud .bar i{position:absolute;inset:0;background:var(--cyan);transform-origin:0 50%;transform:scaleX(0)}
+.chapters{position:relative;z-index:3;margin-top:calc(-100vh + 72px);margin-top:calc(-100svh + 72px + env(safe-area-inset-top,0px))}
+.chapter{min-height:115vh;display:flex;align-items:center;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.chapter:first-child{min-height:calc(100vh - 72px);align-items:center}
+.chapter:last-child{min-height:110vh}
+.card{max-width:min(520px,100%);margin-left:max(0px,calc((100vw - var(--wrap)) / 2));background:rgba(255,255,255,.84);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:36px 38px;border:1px solid var(--hair);display:flex;flex-direction:column;gap:18px}
+.card h1{font-size:clamp(2.7rem,6.4vw,5.4rem)}
+.card h2{font-size:clamp(2rem,4vw,3.2rem)}
+.card p{max-width:34em}
+.card .ctas{display:flex;flex-wrap:wrap;gap:14px;padding-top:6px}
+.intro{background:rgba(255,255,255,.72)}
+.cue{display:flex;align-items:center;gap:12px}
+.cue i{width:1px;height:34px;background:linear-gradient(var(--cyan),transparent);animation:cue 2.2s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(.2);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(.2);transform-origin:bottom}}
+@media (max-width:700px){
+  .chapter{align-items:flex-end;padding-bottom:9vh}
+  .chapter:first-child{align-items:flex-end;padding-bottom:6vh}
+  .card{padding:24px 22px;gap:14px;background:rgba(255,255,255,.93);backdrop-filter:none;-webkit-backdrop-filter:none}
+  .top{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(255,255,255,.97)}
+  .hud{display:none}
+}
+
+/* ============ sections ============ */
+.sec{padding-block:120px}
+.sec.off{background:var(--off)}
+.head{display:flex;flex-direction:column;gap:18px;max-width:40rem;margin-bottom:64px}
+.head h2{font-size:clamp(2.2rem,4.6vw,3.6rem)}
+.head p{font-size:1.125rem}
+.head p.label{font-size:.72rem}
+@media (max-width:700px){.sec{padding-block:80px}.head{margin-bottom:40px}}
+
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:80px;align-items:start}
+.years{display:flex;align-items:flex-start;gap:10px;font-family:var(--f-display);color:var(--ink);line-height:.82}
+.years b{font-weight:400;font-size:clamp(7rem,16vw,12rem);letter-spacing:-.02em;font-variant-numeric:lining-nums}
+.years span{font-size:2.4rem;color:var(--cyan-ink);padding-top:.3em}
+.about-copy{display:flex;flex-direction:column;gap:22px;min-width:0}
+.about-copy .big{font-family:var(--f-display);font-size:clamp(1.7rem,3vw,2.3rem);color:var(--ink);line-height:1.3}
+.svc{list-style:none;margin:16px 0 0;padding:0;border-top:1px solid var(--hair)}
+.svc li{display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:baseline;padding-block:16px;border-bottom:1px solid var(--hair)}
+.svc li span:nth-child(2){font-size:1.15rem;color:var(--ink)}
+@media (max-width:860px){.about{grid-template-columns:1fr;gap:40px}}
+
+/* projects */
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:56px 32px}
+.gallery .wide{grid-column:span 2}
+@media (max-width:860px){.gallery{grid-template-columns:1fr 1fr}.gallery .wide{grid-column:span 2}}
+@media (max-width:560px){.gallery{grid-template-columns:1fr}.gallery .wide{grid-column:auto}}
+.work{display:flex;flex-direction:column;gap:16px;background:none;border:0;padding:0;text-align:left;font:inherit;color:inherit}
+button.work{cursor:pointer}
+.ph-frame{position:relative;aspect-ratio:4/3;max-width:100%;background:var(--off);border:1px solid var(--hair);overflow:hidden}
+.wide .ph-frame{aspect-ratio:16/9}
+.ph-frame img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+button.work:hover img{transform:scale(1.04)}
+.ph-frame svg{position:absolute;inset:0;width:100%;height:100%}
+.ph-frame .ph-note{position:absolute;left:16px;bottom:14px}
+.work .meta{display:flex;justify-content:space-between;gap:16px;align-items:baseline;border-top:1px solid var(--hair);padding-top:14px}
+.work h3{font-size:1.5rem}
+
+/* credentials */
+.creds{border-top:1px solid var(--hair-strong)}
+.cred{display:grid;grid-template-columns:80px minmax(0,1.3fr) minmax(0,1fr) auto;gap:20px;align-items:center;padding-block:26px;border-bottom:1px solid var(--hair)}
+.cred h3{font-size:1.6rem}
+.cred .issuer{color:var(--grey)}
+.cred .view{justify-self:end}
+.cred .pending{font-family:var(--f-label);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--grey)}
+@media (max-width:700px){.cred{grid-template-columns:56px 1fr;gap:8px 14px}.cred .issuer,.cred .view,.cred .pending{grid-column:2;justify-self:start}}
+.fine{margin-top:22px;font-size:.92rem;color:var(--grey)}
+
+/* testimonials */
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:48px}
+.quote{margin:0;display:flex;flex-direction:column;gap:18px;border-top:1px solid var(--cyan);padding-top:26px}
+.quote p{font-family:var(--f-display);font-size:1.6rem;color:var(--ink);line-height:1.35}
+.quote figcaption{font-family:var(--f-label);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--grey)}
+
+/* contact */
+.contact{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:88px;align-items:start}
+@media (max-width:900px){.contact{grid-template-columns:1fr;gap:56px}}
+.rows{border-top:1px solid var(--hair-strong)}
+.row{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:14px;align-items:center;padding-block:20px;border-bottom:1px solid var(--hair)}
+.row .val{font-size:1.15rem;color:var(--ink);overflow-wrap:anywhere}
+.row .val a{text-decoration:none}
+.row .val a:hover{color:var(--cyan-ink)}
+.copy{font-family:var(--f-label);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;background:none;border:0;border-bottom:1px solid var(--hair-strong);padding:2px 0;color:var(--grey);cursor:pointer}
+.copy:hover{color:var(--cyan-ink);border-color:var(--cyan-ink)}
+@media (max-width:480px){.row{grid-template-columns:1fr auto}.row .label{grid-column:1/-1}}
+form.enq{display:grid;grid-template-columns:1fr 1fr;gap:34px 28px}
+@media (max-width:560px){form.enq{grid-template-columns:1fr}}
+.f{display:flex;flex-direction:column;gap:8px;min-width:0}
+.f.full{grid-column:1/-1}
+.f input,.f select,.f textarea{font-family:var(--f-text);font-size:1.08rem;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--hair-strong);border-radius:0;padding:8px 0 10px;width:100%;transition:border-color .3s}
+.f select{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--grey) 50%),linear-gradient(135deg,var(--grey) 50%,transparent 50%);background-position:calc(100% - 10px) 55%,calc(100% - 5px) 55%;background-size:5px 5px;background-repeat:no-repeat}
+.f textarea{resize:vertical;min-height:96px}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--cyan)}
+.f input::placeholder,.f textarea::placeholder{color:#b4b8bd}
+.f.err input,.f.err textarea{border-color:#c9665d}
+.send{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between}
+.send p{font-size:.92rem;color:var(--grey);max-width:24em}
+.msg{grid-column:1/-1;color:#b9574d;font-size:.95rem}
+.msg:empty{display:none}
+
+/* footer */
+.foot{border-top:1px solid var(--hair);background:var(--bg)}
+.foot .wrap{display:flex;flex-wrap:wrap;gap:20px 40px;align-items:center;justify-content:space-between;padding-block:40px calc(40px + env(safe-area-inset-bottom,0px))}
+.foot img{height:30px;width:auto}
+
+/* floating WhatsApp */
+.fab{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:55;display:flex;align-items:center;gap:10px;padding:12px 18px 12px 14px;background:rgba(255,255,255,.92);border:1px solid var(--hair-strong);border-radius:999px;text-decoration:none;color:var(--ink);box-shadow:0 6px 24px rgba(21,23,26,.08);font-family:var(--f-label);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;transition:border-color .3s}
+.fab:hover{border-color:var(--cyan)}
+.fab svg{width:20px;height:20px;color:var(--cyan-ink)}
+@media (max-width:560px){.fab span{display:none}.fab{padding:13px}}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:80;background:rgba(250,250,249,.96);display:flex;align-items:center;justify-content:center;padding:max(24px,env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) max(24px,env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px))}
+.lb-in{display:flex;flex-direction:column;gap:14px;max-width:min(960px,100%)}
+.lb-img{position:relative;overflow:hidden;line-height:0;border:1px solid var(--hair);background:#fff}
+.lb-img img{max-height:76vh;max-width:100%;width:auto;display:block;margin:auto;user-select:none;-webkit-user-drag:none;pointer-events:none}
+.wm{position:absolute;inset:-25%;pointer-events:none;opacity:.2;transform:rotate(-24deg);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='440' height='110'%3E%3Ctext x='0' y='55' font-family='sans-serif' font-size='13' fill='%231b8ea7' letter-spacing='3'%3ESAI PRABHU ASSOCIATES · FOR VERIFICATION ONLY%3C/text%3E%3C/svg%3E");background-size:440px 110px}
+.lb-cap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.lb-x{position:absolute;top:calc(16px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px));width:46px;height:46px;border-radius:50%;border:1px solid var(--hair-strong);background:#fff;color:var(--ink);font-size:20px;cursor:pointer}
+
+/* quiet reveal where scroll-driven animation exists */
+@supports (animation-timeline:view()){@media (prefers-reduced-motion:no-preference){
+  .rv{animation:rv linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
+  @keyframes rv{from{opacity:.2;transform:translateY(24px)}}
+}}
+@media (prefers-reduced-motion:reduce){.cue i{animation:none}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Sai Prabhu Associates, back to top"><img src="assets/logo.png" alt="Sai Prabhu Associates"></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#about">Practice</a>
+      <a href="#projects">Projects</a>
+      <a href="#credentials">Credentials</a>
+      <a href="#clients" data-needs-quotes hidden>Clients</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn" href="#contact">Enquire</a>
+  </div>
+</header>
+
+<main id="top">
+<!-- ============ THE FLIGHT ============ -->
+<section class="fly" id="fly" aria-label="Services">
+  <div class="stage" id="stage">
+    <canvas id="city" aria-hidden="true"></canvas>
+    <div class="hud" aria-hidden="true">
+      <span class="label" id="hudLabel">Site plan</span>
+      <span class="bar"><i id="hudBar"></i></span>
+    </div>
+  </div>
+
+  <div class="chapters">
+    <div class="chapter">
+      <div class="card intro">
+        <p class="label rule">Civil engineering consultancy · Shirdi</p>
+        <h1>Sai Prabhu Associates</h1>
+        <p>We plan, design and oversee buildings that are made to last, and we stay with every project until it stands.</p>
+        <p class="label cue"><i></i>Scroll to fly through the city</p>
+      </div>
+    </div>
+    <div class="chapter" data-ch="Residential planning">
+      <div class="card">
+        <p class="label cyan">I · Residential planning</p>
+        <h2>Every building begins as a line on paper.</h2>
+        <p>Plans shaped around the plot, the family and the budget. Light, ventilation and every room are settled long before the first brick is laid.</p>
+      </div>
+    </div>
+    <div class="chapter" data-ch="Structural design">
+      <div class="card">
+        <p class="label cyan">II · Structural design</p>
+        <h2>Strength you never have to think about.</h2>
+        <p>Columns, beams, slabs and footings, designed for the loads they carry and the ground they stand on, with details a contractor can build from.</p>
+      </div>
+    </div>
+    <div class="chapter" data-ch="Estimates">
+      <div class="card">
+        <p class="label cyan">III · Estimates</p>
+        <h2>The cost, known in advance.</h2>
+        <p>Material and labour quantities worked out in detail, so the budget is decided at the start rather than discovered halfway.</p>
+      </div>
+    </div>
+    <div class="chapter" data-ch="Government approvals">
+      <div class="card">
+        <p class="label cyan">IV · Government approvals</p>
+        <h2>Permission, handled properly.</h2>
+        <p>Submission drawings and documents prepared for the local authority, and followed through until the approval is in hand.</p>
+      </div>
+    </div>
+    <div class="chapter" data-ch="Site supervision">
+      <div class="card">
+        <p class="label cyan">V · Site supervision</p>
+        <h2>Built exactly as drawn.</h2>
+        <p>Regular visits through construction to check the work against the drawings, and to settle problems while they are still small.</p>
+      </div>
+    </div>
+    <div class="chapter" data-ch="Complete">
+      <div class="card">
+        <p class="label rule">One firm, every stage</p>
+        <h2>From the first line to the last floor.</h2>
+        <div class="ctas">
+          <a class="btn solid" href="#contact">Discuss your project</a>
+          <a class="btn" href="#credentials">View credentials</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRACTICE ============ -->
+<section class="sec" id="about">
+  <div class="wrap about">
+    <div class="rv">
+      <div class="years"><b>21</b><span>+</span></div>
+      <p class="label" style="margin-top:14px">Years of practice</p>
+    </div>
+    <div class="about-copy rv">
+      <p class="label rule">The practice</p>
+      <p class="big">Sai Prabhu Associates is a civil engineering consultancy based in Shirdi, trusted with homes and buildings for over two decades.</p>
+      <p>We stay with every project from the first conversation about a plot to the last visit on site. Planning, structure, cost, permissions and supervision are handled under one roof, so nothing is lost between stages.</p>
+      <ul class="svc">
+        <li><span class="label">I</span><span>Residential planning</span><span class="label">Plans · elevations</span></li>
+        <li><span class="label">II</span><span>Structural design</span><span class="label">RCC · footings</span></li>
+        <li><span class="label">III</span><span>Estimates</span><span class="label">Quantities · cost</span></li>
+        <li><span class="label">IV</span><span>Government approvals</span><span class="label">Permissions</span></li>
+        <li><span class="label">V</span><span>Site supervision</span><span class="label">Visits · checks</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section class="sec off" id="projects">
+  <div class="wrap">
+    <div class="head rv">
+      <p class="label rule">Selected work</p>
+      <h2>Projects</h2>
+    </div>
+    <div class="gallery" id="gallery"></div>
+  </div>
+</section>
+
+<!-- ============ CREDENTIALS ============ -->
+<section class="sec" id="credentials">
+  <div class="wrap">
+    <div class="head rv">
+      <p class="label rule">On record</p>
+      <h2>Credentials</h2>
+      <p>Qualifications and registrations, published so that clients can check them before work begins.</p>
+    </div>
+    <div class="creds" id="creds"></div>
+    <p class="fine">Documents are shown for verification only and are watermarked accordingly.</p>
+  </div>
+</section>
+
+<!-- ============ CLIENTS (appears once real quotes exist) ============ -->
+<section class="sec off" id="clients" hidden>
+  <div class="wrap">
+    <div class="head rv"><p class="label rule">Clients</p><h2>In their words</h2></div>
+    <div class="quotes" id="quotes"></div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="sec off" id="contact" style="border-top:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="head rv">
+      <p class="label rule">Contact</p>
+      <h2>Begin with a conversation.</h2>
+      <p>Tell us about the plot and what you have in mind. We respond to every enquiry personally.</p>
+    </div>
+    <div class="contact">
+      <div class="rows">
+        <div class="row"><span class="label">Phone</span><span class="val"><a href="tel:+919404295750">+91 94042 95750</a></span><button class="copy" type="button" data-copy="+91 9404295750">Copy</button></div>
+        <div class="row"><span class="label">WhatsApp</span><span class="val"><a href="https://wa.me/919404295750" target="_blank" rel="noopener">+91 94042 95750</a></span><button class="copy" type="button" data-copy="+91 9404295750">Copy</button></div>
+        <div class="row"><span class="label">Email</span><span class="val"><a href="mailto:saiprabhuassociates11@gmail.com">saiprabhuassociates11@gmail.com</a></span><button class="copy" type="button" data-copy="saiprabhuassociates11@gmail.com">Copy</button></div>
+        <div class="row"><span class="label">Office</span><span class="val">Ground floor, Sai Prabhu Inn,<br>New Pimpalwadi Rd, Shirdi</span><a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=Sai%20Prabhu%20Inn%2C%20New%20Pimpalwadi%20Rd%2C%20Shirdi" target="_blank" rel="noopener">Map</a></div>
+      </div>
+
+      <form class="enq" id="enq" novalidate>
+        <div class="f"><label class="label" for="f-name">Name</label><input id="f-name" autocomplete="name" placeholder="Your name"></div>
+        <div class="f"><label class="label" for="f-phone">Phone</label><input id="f-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Mobile number"></div>
+        <div class="f"><label class="label" for="f-type">Service</label>
+          <select id="f-type">
+            <option>Complete project</option>
+            <option>Residential planning</option>
+            <option>Structural design</option>
+            <option>Estimate</option>
+            <option>Government approval</option>
+            <option>Site supervision</option>
+          </select></div>
+        <div class="f"><label class="label" for="f-place">Plot location</label><input id="f-place" placeholder="Village or area"></div>
+        <div class="f" style="position:absolute;left:-9999px" aria-hidden="true"><label for="f-hp">Leave empty</label><input id="f-hp" tabindex="-1" autocomplete="off"></div>
+        <div class="f full"><label class="label" for="f-msg">About the project</label><textarea id="f-msg" placeholder="Plot size, number of floors, when you hope to begin"></textarea></div>
+        <p class="msg" id="msg" role="alert"></p>
+        <div class="send">
+          <p>Your message opens in WhatsApp, ready to send.</p>
+          <a class="btn solid" id="sendWa" href="https://wa.me/919404295750" target="_blank" rel="noopener">Send on WhatsApp</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <img src="assets/logo.png" alt="Sai Prabhu Associates">
+    <span class="label">Principal Engineer: Er. Pratap Shinde · Shirdi</span>
+    <span class="label">© 2026 Sai Prabhu Associates</span>
+  </div>
+</footer>
+
+<a class="fab" href="https://wa.me/919404295750" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3Z"/></svg>
+  <span>WhatsApp</span>
+</a>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Viewer">
+  <button class="lb-x" id="lbX" type="button" aria-label="Close">×</button>
+  <div class="lb-in">
+    <div class="lb-img"><img id="lbImg" alt=""><div class="wm" id="lbWm"></div></div>
+    <div class="lb-cap"><span class="label" id="lbT"></span><span class="label" id="lbS"></span></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="assets/config.js"></script>
+<script>
+/* Content (projects, credentials, client quotes) is managed from the admin panel (admin.html)
+   and loaded from Supabase. Until something is uploaded, tasteful placeholders are shown. */
+const CFG = window.SPA_CONFIG || {};
+const PHONE = CFG.whatsapp || "919404295750";
+let sb = null;
+try { if (window.supabase && CFG.supabaseUrl) sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseKey); } catch (e) { sb = null; }
+
+let PROJECTS = [], DOCUMENTS = [], TESTIMONIALS = [];
+const PLACEHOLDER_PROJECTS = 5;
+const PLACEHOLDER_DOCS = ["Engineering degree", "Licence / registration", "Other certificate"];
+
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const roman = n => ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"][n] || String(n + 1);
+const fileUrl = (bucket, path) => path && sb ? sb.storage.from(bucket).getPublicUrl(path).data.publicUrl : "";
+
+/* ---------- projects ---------- */
+const sketch = `<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="#c3c8cc" stroke-width="1">
+<path d="M40 250H360M110 250V120H210V250M210 250V80H300V250M120 140h80M120 160h80M120 180h80M120 200h80M120 220h80M220 100h70M220 120h70M220 140h70M220 160h70M220 180h70M220 200h70M220 220h70M140 120V250M170 120V250M240 80V250M270 80V250"/>
+<path d="M110 120l20-14h80l-20 14M210 80l14-10h90l-14 10" stroke="#9fd6e3"/></g></svg>`;
+function renderProjects() {
+  const list = PROJECTS.length ? PROJECTS : Array.from({ length: PLACEHOLDER_PROJECTS }, () => ({}));
+  const n = list.length;
+  $("#gallery").innerHTML = list.map((p, i) => {
+    const has = !!p.img, tag = has ? "button" : "div";
+    const wide = n >= 3 && (i % 5 === 0 || i % 5 === 4);
+    return `<${tag} class="work rv${wide ? " wide" : ""}" ${has ? `type="button" data-kind="project" data-i="${i}"` : ""}>
+      <div class="ph-frame">${has ? `<img src="${esc(p.img)}" alt="${esc(p.title)}" loading="lazy">` : sketch + `<span class="label ph-note">Photograph to follow</span>`}</div>
+      <div class="meta"><h3>${esc(p.title || "Project " + roman(i))}</h3><span class="label">${esc([p.type, p.place, p.year].filter(Boolean).join(" · "))}</span></div>
+    </${tag}>`;
+  }).join("");
+}
+
+/* ---------- credentials ---------- */
+function renderDocs() {
+  const list = DOCUMENTS.length ? DOCUMENTS : PLACEHOLDER_DOCS.map(title => ({ title }));
+  $("#creds").innerHTML = list.map((d, i) => `<div class="cred rv">
+    <span class="label">C · ${String(i + 1).padStart(2, "0")}</span>
+    <h3>${esc(d.title)}</h3>
+    <span class="issuer">${esc(d.issuer)}</span>
+    ${d.img ? `<button class="link view" type="button" data-kind="doc" data-i="${i}" style="background:none;border-left:0;border-right:0;border-top:0;cursor:pointer">View document</button>` : `<span class="pending">Awaiting upload</span>`}
+  </div>`).join("");
+}
+
+/* ---------- testimonials ---------- */
+function renderQuotes() {
+  const show = TESTIMONIALS.length > 0;
+  $("#clients").hidden = !show;
+  $$("[data-needs-quotes]").forEach(a => a.hidden = !show);
+  $("#quotes").innerHTML = TESTIMONIALS.map(t => `<figure class="quote rv"><p>${esc(t.quote)}</p><figcaption>${esc(t.name)}${t.project ? " · " + esc(t.project) : ""}</figcaption></figure>`).join("");
+}
+
+renderProjects(); renderDocs(); renderQuotes();
+
+async function loadContent() {
+  if (!sb) return;
+  try {
+    const [p, d, t] = await Promise.all([
+      sb.from("projects").select("title,type,place,year,image_path").eq("visible", true).order("sort").order("created_at", { ascending: false }),
+      sb.from("documents").select("title,issuer,image_path").eq("visible", true).order("sort").order("created_at"),
+      sb.from("testimonials").select("quote,name,project").eq("visible", true).order("sort").order("created_at", { ascending: false }),
+    ]);
+    if (!p.error) { PROJECTS = (p.data || []).map(r => ({ ...r, img: fileUrl("projects", r.image_path) })); renderProjects(); }
+    if (!d.error) { DOCUMENTS = (d.data || []).map(r => ({ ...r, img: fileUrl("credentials", r.image_path) })); renderDocs(); }
+    if (!t.error) { TESTIMONIALS = t.data || []; renderQuotes(); }
+  } catch (e) { /* keep placeholders if the database can't be reached */ }
+}
+loadContent();
+
+/* ---------- viewer ---------- */
+const lb = $("#lb");
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-kind]"); if (!b) return;
+  const doc = b.dataset.kind === "doc", it = (doc ? DOCUMENTS : PROJECTS)[+b.dataset.i];
+  $("#lbImg").src = it.img; $("#lbImg").alt = it.title || "";
+  $("#lbT").textContent = it.title || ""; $("#lbS").textContent = doc ? "For verification only" : [it.type, it.place, it.year].filter(Boolean).join(" · ");
+  $("#lbWm").hidden = !doc; lb.hidden = false; $("#lbX").focus();
+});
+$("#lbX").onclick = () => lb.hidden = true;
+lb.addEventListener("click", e => { if (e.target === lb) lb.hidden = true; });
+document.addEventListener("keydown", e => { if (e.key === "Escape") lb.hidden = true; });
+lb.addEventListener("contextmenu", e => e.preventDefault());
+
+/* ---------- copy ---------- */
+$$(".copy").forEach(b => b.addEventListener("click", () => {
+  const ok = () => { b.textContent = "Copied"; setTimeout(() => b.textContent = "Copy", 1600); };
+  const sel = () => { const r = document.createRange(); r.selectNodeContents(b.parentElement.querySelector(".val")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Selected"; };
+  try { navigator.clipboard.writeText(b.dataset.copy).then(ok, sel); } catch { sel(); }
+}));
+
+/* ---------- enquiry -> WhatsApp ---------- */
+const sendA = $("#sendWa"), msg = $("#msg");
+function build() {
+  const v = id => $(id).value.trim();
+  const L = ["Hello, I found Sai Prabhu Associates online and would like to discuss a project.", ""];
+  if (v("#f-name")) L.push("Name: " + v("#f-name"));
+  if (v("#f-phone")) L.push("Phone: " + v("#f-phone"));
+  L.push("Service: " + v("#f-type"));
+  if (v("#f-place")) L.push("Plot location: " + v("#f-place"));
+  if (v("#f-msg")) L.push("", v("#f-msg"));
+  sendA.href = `https://wa.me/${PHONE}?text=${encodeURIComponent(L.join("\n"))}`;
+}
+$("#enq").addEventListener("input", () => { build(); msg.textContent = ""; $$(".f.err").forEach(f => f.classList.remove("err")); });
+$("#enq").addEventListener("submit", e => e.preventDefault());
+let lastSaved = "";
+function saveEnquiry() {
+  if (!sb || $("#f-hp").value) return;                       // hidden field filled = a spam bot
+  const v = id => $(id).value.trim();
+  const row = { name: v("#f-name").slice(0, 120), phone: v("#f-phone").slice(0, 30), service: v("#f-type").slice(0, 60), place: v("#f-place").slice(0, 160), message: v("#f-msg").slice(0, 3000) };
+  const key = JSON.stringify(row);
+  if (key === lastSaved) return;                               // don't save the same message twice
+  lastSaved = key;
+  sb.from("enquiries").insert(row).then(() => {}, () => {});
+}
+sendA.addEventListener("click", e => {
+  const miss = [["#f-name", "your name"], ["#f-msg", "a line about the project"]].filter(([id]) => !$(id).value.trim());
+  if (!miss.length) { saveEnquiry(); return; }
+  e.preventDefault();
+  miss.forEach(([id]) => $(id).closest(".f").classList.add("err"));
+  msg.textContent = "Please add " + miss.map(m => m[1]).join(" and ") + " before sending.";
+  $(miss[0][0]).focus();
+});
+build();
+
+/* =================================================================
+   THE CITY. A raw-WebGL wireframe city. Plots are laid out in cyan,
+   buildings rise in graphite as the camera flies past along the streets.
+   ================================================================= */
+(function city() {
+  const canvas = $("#city"), stage = $("#stage"), fly = $("#fly");
+  const gl = canvas.getContext("webgl", { antialias: true, alpha: false, preserveDrawingBuffer: false });
+  if (!gl) { stage.classList.add("nogl"); return; }
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const small = Math.min(innerWidth, innerHeight) < 700;
+
+  /* seeded random so the city is the same on every visit */
+  let seed = 20052026;
+  const rnd = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
+  const R = (a, b) => a + (b - a) * rnd();
+
+  /* ---- flight path along the streets (block pitch P, streets on multiples of P) ---- */
+  const P = 76;
+  const way = [
+    [-70, 330, -300], [-20, 190, -150], [0, 70, -10], [0, 9, 110], [0, 7.5, 230], [0, 7.5, 330],
+    [3, 7.5, 368], [22, 7.5, 380], [110, 7.5, 380], [196, 7.5, 380], [224, 7.5, 392], [228, 7.5, 420],
+    [228, 7.5, 520], [228, 7.5, 610], [228, 7.5, 664], [228, 7, 684]
+  ];
+  // Catmull-Rom sampled, then re-parameterised by arc length
+  const raw = [];
+  const pts = [way[0], ...way, way[way.length - 1]];
+  for (let i = 1; i < pts.length - 2; i++) {
+    const [p0, p1, p2, p3] = [pts[i - 1], pts[i], pts[i + 1], pts[i + 2]];
+    for (let s = 0; s < 40; s++) {
+      const t = s / 40, t2 = t * t, t3 = t2 * t;
+      raw.push([0, 1, 2].map(k => .5 * ((2 * p1[k]) + (-p0[k] + p2[k]) * t + (2 * p0[k] - 5 * p1[k] + 4 * p2[k] - p3[k]) * t2 + (-p0[k] + 3 * p1[k] - 3 * p2[k] + p3[k]) * t3)));
+    }
+  }
+  raw.push(way[way.length - 1]);
+  const cum = [0];
+  for (let i = 1; i < raw.length; i++) cum.push(cum[i - 1] + Math.hypot(raw[i][0] - raw[i - 1][0], raw[i][1] - raw[i - 1][1], raw[i][2] - raw[i - 1][2]));
+  const total = cum[cum.length - 1];
+  function at(u) {
+    u = Math.max(0, Math.min(1, u)); const d = u * total;
+    let lo = 0, hi = cum.length - 1;
+    while (hi - lo > 1) { const m = (lo + hi) >> 1; if (cum[m] < d) lo = m; else hi = m; }
+    const f = (d - cum[lo]) / ((cum[hi] - cum[lo]) || 1);
+    return [0, 1, 2].map(k => raw[lo][k] + (raw[hi][k] - raw[lo][k]) * f);
+  }
+  const samples = []; for (let i = 0; i <= 500; i++) samples.push(at(i / 500));
+  function nearestU(x, z) {
+    let best = 1e9, bu = 0;
+    for (let i = 0; i < samples.length; i++) { const p = samples[i]; if (p[1] > 40) continue; const d = (p[0] - x) ** 2 + (p[2] - z) ** 2; if (d < best) { best = d; bu = i / 500; } }
+    return [bu, Math.sqrt(best)];
+  }
+
+  /* ---- geometry buffers: position(3) + meta(4: plan time, rise time, height, kind) ---- */
+  const L = [], T = [];   // line vertices, triangle vertices
+  const KB = 0, KP = 1, KR = 2;   // kinds: building line, plot line, road line
+  const seg = (a, b, m) => { L.push(a[0], a[1], a[2], m[0], m[1], m[2], m[3], b[0], b[1], b[2], m[0], m[1], m[2], m[3]); };
+  const ring = (x0, x1, y, z0, z1, m) => { seg([x0, y, z0], [x1, y, z0], m); seg([x1, y, z0], [x1, y, z1], m); seg([x1, y, z1], [x0, y, z1], m); seg([x0, y, z1], [x0, y, z0], m); };
+  function quad(a, b, c, d, m) { for (const v of [a, b, c, a, c, d]) T.push(v[0], v[1], v[2], m[0], m[1], m[2], m[3]); }
+
+  function mass(x0, x1, y0, y1, z0, z1, m, style) {
+    // outline
+    ring(x0, x1, y0, z0, z1, m); ring(x0, x1, y1, z0, z1, m);
+    for (const [x, z] of [[x0, z0], [x1, z0], [x1, z1], [x0, z1]]) seg([x, y0, z], [x, y1, z], m);
+    // facade
+    const fh = style.fh;
+    for (let y = y0 + fh; y < y1 - .5; y += fh) {
+      ring(x0, x1, y, z0, z1, m);
+      if (style.balc && !small && Math.round((y - y0) / fh) % style.balc === 0) {
+        const o = 1.5; ring(x0 - o, x1 + o, y, z0 - o, z1 + o, m); ring(x0 - o, x1 + o, y + .45, z0 - o, z1 + o, m);
+      }
+    }
+    const s = small ? style.mull * 1.7 : style.mull;
+    for (let x = x0 + s; x < x1 - s * .5; x += s) { seg([x, y0, z0], [x, y1, z0], m); seg([x, y0, z1], [x, y1, z1], m); }
+    for (let z = z0 + s; z < z1 - s * .5; z += s) { seg([x0, y0, z], [x0, y1, z], m); seg([x1, y0, z], [x1, y1, z], m); }
+    // occluding faces (no bottom)
+    const v = (x, y, z) => [x, y, z];
+    quad(v(x0, y0, z0), v(x1, y0, z0), v(x1, y1, z0), v(x0, y1, z0), m);
+    quad(v(x1, y0, z1), v(x0, y0, z1), v(x0, y1, z1), v(x1, y1, z1), m);
+    quad(v(x0, y0, z1), v(x0, y0, z0), v(x0, y1, z0), v(x0, y1, z1), m);
+    quad(v(x1, y0, z0), v(x1, y0, z1), v(x1, y1, z1), v(x1, y1, z0), m);
+    quad(v(x0, y1, z0), v(x1, y1, z0), v(x1, y1, z1), v(x0, y1, z1), m);
+  }
+
+  function building(cx, cz, w, d, H, plan, rise, kind) {
+    const m = [plan, rise, H, KB];
+    const x0 = cx - w / 2, x1 = cx + w / 2, z0 = cz - d / 2, z1 = cz + d / 2;
+    const style = { fh: R(3.2, 3.8), mull: R(2.6, 4.6), balc: 0 };
+    if (kind === "tower") {
+      const pod = R(10, 16), ins = Math.min(w, d) * R(.12, .2);
+      mass(x0, x1, 0, pod, z0, z1, m, { fh: 4.2, mull: 6, balc: 0 });
+      const top = H - R(5, 9);
+      mass(x0 + ins, x1 - ins, pod, top, z0 + ins, z1 - ins, m, { fh: style.fh, mull: R(2.4, 3.2), balc: rnd() < .5 ? 2 : 0 });
+      const c = ins + Math.min(w, d) * .14;
+      mass(x0 + c, x1 - c, top, H, z0 + c, z1 - c, m, { fh: 99, mull: 99, balc: 0 });
+    } else {
+      if (rnd() < .45) style.balc = rnd() < .5 ? 1 : 2, style.mull = R(5, 8);
+      mass(x0, x1, 0, H, z0, z1, m, style);
+    }
+  }
+
+  /* ---- streets ---- */
+  const I0 = small ? -1 : -3, I1 = small ? 4 : 5, J0 = small ? -1 : -3, J1 = small ? 10 : 11;
+  const RW = 9, roadM = [-1, -1, 0, KR];
+  for (let k = I0; k <= I1 + 1; k++) for (let j = J0; j <= J1; j++) {
+    const x = k * P, za = j * P + RW, zb = (j + 1) * P - RW;
+    seg([x - RW, 0, za], [x - RW, 0, zb], roadM); seg([x + RW, 0, za], [x + RW, 0, zb], roadM);
+    seg([x - RW - 3, 0, za + 3], [x - RW - 3, 0, zb - 3], roadM); seg([x + RW + 3, 0, za + 3], [x + RW + 3, 0, zb - 3], roadM);
+    for (let z = za + 8; z < zb - 6; z += 7) seg([x, 0, z], [x, 0, z + 3.2], roadM);
+    if (!small) for (let s = -RW + 1.5; s < RW - 1; s += 1.8) { seg([x + s, 0, za + 1], [x + s, 0, za + 4.5], roadM); seg([x + s, 0, zb - 1], [x + s, 0, zb - 4.5], roadM); }
+  }
+  for (let j = J0; j <= J1 + 1; j++) for (let k = I0; k <= I1; k++) {
+    const z = j * P, xa = k * P + RW, xb = (k + 1) * P - RW;
+    seg([xa, 0, z - RW], [xb, 0, z - RW], roadM); seg([xa, 0, z + RW], [xb, 0, z + RW], roadM);
+    seg([xa + 3, 0, z - RW - 3], [xb - 3, 0, z - RW - 3], roadM); seg([xa + 3, 0, z + RW + 3], [xb - 3, 0, z + RW + 3], roadM);
+    for (let x = xa + 8; x < xb - 6; x += 7) seg([x, 0, z], [x + 3.2, 0, z], roadM);
+    if (!small) for (let s = -RW + 1.5; s < RW - 1; s += 1.8) { seg([xa + 1, 0, z + s], [xa + 4.5, 0, z + s], roadM); seg([xb - 1, 0, z + s], [xb - 4.5, 0, z + s], roadM); }
+  }
+
+  /* ---- blocks, plots and buildings ---- */
+  const plaza = (i, j) => (i === 2 || i === 3) && (j === 8 || j === 9);
+  for (let i = I0; i <= I1; i++) for (let j = J0; j <= J1; j++) {
+    const bx0 = i * P + RW + 3, bx1 = (i + 1) * P - RW - 3, bz0 = j * P + RW + 3, bz1 = (j + 1) * P - RW - 3;
+    const cx = (bx0 + bx1) / 2, cz = (bz0 + bz1) / 2;
+    const [u, dist] = nearestU(cx, cz);
+    const nearStart = cz < 140 && Math.abs(cx) < P * 1.5;
+    const plots = plaza(i, j) || (j >= 7 && rnd() < .5) ? [[bx0, bx1, bz0, bz1, true]]
+      : [[bx0, cx, bz0, cz], [cx, bx1, bz0, cz], [bx0, cx, cz, bz1], [cx, bx1, cz, bz1]];
+    for (const [x0, x1, z0, z1, big] of plots) {
+      const pcx = (x0 + x1) / 2, pcz = (z0 + z1) / 2;
+      const [pu] = nearestU(pcx, pcz);
+      const plan = Math.max(-.05, pu * .48 - .07 + R(0, .04));
+      const rise = Math.max(plan + .03, pu - .085 + R(-.01, .015) + (dist > 160 ? R(0, .05) : 0));
+      seg([x0 + 1, 0, z0 + 1], [x1 - 1, 0, z0 + 1], [plan, 9, 0, KP]); seg([x1 - 1, 0, z0 + 1], [x1 - 1, 0, z1 - 1], [plan, 9, 0, KP]);
+      seg([x1 - 1, 0, z1 - 1], [x0 + 1, 0, z1 - 1], [plan, 9, 0, KP]); seg([x0 + 1, 0, z1 - 1], [x0 + 1, 0, z0 + 1], [plan, 9, 0, KP]);
+      if (!big && rnd() < .12) continue;               // the odd open plot keeps the plan legible
+      const inset = R(2.5, 4.5);
+      const w = (x1 - x0) - inset * 2, d = (z1 - z0) - inset * 2;
+      let H;
+      if (plaza(i, j)) H = R(170, 270);
+      else if (big) H = R(70, 150);
+      else if (nearStart) H = R(10, 26);
+      else if (j >= 6) H = rnd() < .35 ? R(55, 110) : R(22, 50);
+      else H = rnd() < .18 ? R(50, 90) : R(12, 42);
+      building(pcx + R(-1, 1), pcz + R(-1, 1), w * R(.86, 1), d * R(.86, 1), H, plan, rise, H > 60 ? "tower" : "block");
+    }
+  }
+
+  /* ---- WebGL plumbing ---- */
+  const vs = `attribute vec3 aPos; attribute vec4 aMeta;
+    uniform mat4 uVP; uniform float uP; uniform vec3 uCam; uniform float uFar;
+    varying float vA; varying float vG; varying float vFog; varying float vK; varying float vY;
+    void main(){
+      float g = smoothstep(aMeta.y, aMeta.y + 0.07, uP);
+      vec3 p = aPos;
+      if (aMeta.w < 0.5) p.y = min(p.y, aMeta.z * g);
+      vG = g; vK = aMeta.w; vY = p.y / max(aMeta.z, 1.0);
+      vA = smoothstep(aMeta.x, aMeta.x + 0.03, uP);
+      vFog = smoothstep(uFar * 0.18, uFar, distance(p, uCam));
+      gl_Position = uVP * vec4(p, 1.0);
+    }`;
+  const fs = `precision mediump float;
+    uniform float uMode; uniform vec3 uBg;
+    varying float vA; varying float vG; varying float vFog; varying float vK; varying float vY;
+    void main(){
+      if (uMode < 0.5) { if (vG < 0.002) discard; gl_FragColor = vec4(uBg, 1.0); return; }
+      vec3 ink = vec3(0.16, 0.18, 0.2), cyan = vec3(0.26, 0.72, 0.81), road = vec3(0.62, 0.65, 0.68);
+      vec3 c; float a;
+      if (vK < 0.5) { float growing = vG * (1.0 - vG) * 4.0; c = mix(cyan, ink, smoothstep(0.0, 1.0, vG)); c = mix(c, cyan, growing * 0.6); a = 0.78 * step(0.001, vG + vA * 0.0001); if (vG < 0.001) { c = cyan; a = 0.55; } }
+      else if (vK < 1.5) { c = cyan; a = 0.5; }
+      else { c = road; a = 0.62; }
+      a *= vA * (1.0 - vFog);
+      if (a < 0.01) discard;
+      gl_FragColor = vec4(mix(uBg, c, a), 1.0);
+    }`;
+  const sh = (t, s) => { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(o)); return o; };
+  let prog;
+  try { prog = gl.createProgram(); gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(prog); }
+  catch (e) { stage.classList.add("nogl"); return; }
+  gl.useProgram(prog);
+  const loc = n => gl.getUniformLocation(prog, n);
+  const U = { vp: loc("uVP"), p: loc("uP"), cam: loc("uCam"), far: loc("uFar"), mode: loc("uMode"), bg: loc("uBg") };
+  const aPos = gl.getAttribLocation(prog, "aPos"), aMeta = gl.getAttribLocation(prog, "aMeta");
+  const mk = arr => { const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(arr), gl.STATIC_DRAW); return { b, n: arr.length / 7 }; };
+  const lineBuf = mk(L), triBuf = mk(T);
+  L.length = 0; T.length = 0;
+  const bind = buf => { gl.bindBuffer(gl.ARRAY_BUFFER, buf.b); gl.enableVertexAttribArray(aPos); gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, 28, 0); gl.enableVertexAttribArray(aMeta); gl.vertexAttribPointer(aMeta, 4, gl.FLOAT, false, 28, 12); };
+  gl.uniform3f(U.bg, 1, 1, 1);
+  gl.enable(gl.DEPTH_TEST);
+
+  /* ---- tiny matrix helpers (column-major) ---- */
+  const persp = (fov, asp, n, f) => { const t = 1 / Math.tan(fov / 2), nf = 1 / (n - f); return [t / asp, 0, 0, 0, 0, t, 0, 0, 0, 0, (f + n) * nf, -1, 0, 0, 2 * f * n * nf, 0]; };
+  const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+  const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  const norm = a => { const l = Math.hypot(...a) || 1; return [a[0] / l, a[1] / l, a[2] / l]; };
+  const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+  function look(e, t, up) {
+    const z = norm(sub(e, t)), x = norm(cross(up, z)), y = cross(z, x);
+    return [x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0, -dot(x, e), -dot(y, e), -dot(z, e), 1];
+  }
+  const mul = (a, b) => { const o = new Array(16); for (let c = 0; c < 4; c++) for (let r = 0; r < 4; r++) { let s = 0; for (let k = 0; k < 4; k++) s += a[k * 4 + r] * b[c * 4 + k]; o[c * 4 + r] = s; } return o; };
+  const mix = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+  const ss = (a, b, x) => { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+
+  /* ---- sizing ---- */
+  let W = 0, H = 0;
+  function resize() {
+    const dpr = Math.min(devicePixelRatio || 1, small ? 1.3 : 1.6);
+    W = Math.round(stage.clientWidth * dpr); H = Math.round(stage.clientHeight * dpr);
+    if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; }
+    gl.viewport(0, 0, W, H);
+  }
+
+  /* ---- camera along the path ---- */
+  let roll = 0, lookT = null;
+  function draw(u) {
+    const pos = at(u);
+    const ahead = at(Math.min(1, u + .028));
+    const yaw = p => Math.atan2(p[0], p[2]);
+    const t1 = sub(at(Math.min(1, u + .01)), pos), t2 = sub(at(Math.min(1, u + .03)), at(Math.min(1, u + .01)));
+    let dy = yaw(t2) - yaw(t1); if (dy > Math.PI) dy -= 2 * Math.PI; if (dy < -Math.PI) dy += 2 * Math.PI;
+    roll += (Math.max(-.28, Math.min(.28, -dy * 2.2)) - roll) * .15;
+    let target = ahead;
+    // opening: look over the whole town plan
+    target = mix([70, 0, 230], target, ss(.05, .2, u));
+    // finale: tilt up between the towers
+    const fwd = norm([t1[0] || 0, 0, t1[2] || 1]);
+    const k = ss(.84, 1, u);
+    target = mix(target, [pos[0] + fwd[0] * 40, pos[1] + 62, pos[2] + fwd[2] * 40], k);
+    lookT = target;
+    const f = norm(sub(lookT, pos));
+    const right = norm(cross(f, [0, 1, 0]));
+    const up = norm(mix([0, 1, 0], right, Math.sin(roll) * (1 - k)));
+    const asp = W / H;
+    const fov = (asp < 1 ? 74 : 58) * Math.PI / 180;
+    const vp = mul(persp(fov, asp, .5, 4000), look(pos, lookT, up));
+    gl.clearColor(1, 1, 1, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.uniformMatrix4fv(U.vp, false, new Float32Array(vp));
+    gl.uniform1f(U.p, u); gl.uniform3f(U.cam, pos[0], pos[1], pos[2]);
+    gl.uniform1f(U.far, 300 + pos[1] * 1.9);
+    // pass 1: white faces hide what is behind them
+    gl.depthMask(true); gl.enable(gl.POLYGON_OFFSET_FILL); gl.polygonOffset(1.5, 2);
+    gl.uniform1f(U.mode, 0); bind(triBuf); gl.drawArrays(gl.TRIANGLES, 0, triBuf.n);
+    gl.disable(gl.POLYGON_OFFSET_FILL);
+    // pass 2: the linework
+    gl.uniform1f(U.mode, 1); bind(lineBuf); gl.drawArrays(gl.LINES, 0, lineBuf.n);
+  }
+
+  /* ---- scroll -> progress, with a little inertia ---- */
+  const chapters = $$(".chapter[data-ch]");
+  const hudL = $("#hudLabel"), hudB = $("#hudBar");
+  let cur = 0, target = 0, running = false;
+  function progress() {
+    const r = fly.getBoundingClientRect();
+    const span = r.height - stage.clientHeight;
+    return Math.max(0, Math.min(1, -r.top / (span || 1)));
+  }
+  function hud() {
+    let name = "Site plan";
+    const mid = innerHeight * .55;
+    chapters.forEach(c => { if (c.getBoundingClientRect().top < mid) name = c.dataset.ch; });
+    hudL.textContent = name;
+    hudB.style.transform = `scaleX(${target})`;
+  }
+  function loop() {
+    cur += (target - cur) * (reduce ? 1 : .085);
+    if (Math.abs(target - cur) < .00015) cur = target;
+    draw(cur);
+    if (cur !== target) requestAnimationFrame(loop); else running = false;
+  }
+  function kick() { target = progress(); hud(); if (!running) { running = true; requestAnimationFrame(loop); } }
+  addEventListener("scroll", kick, { passive: true });
+  addEventListener("resize", () => { resize(); draw(cur); kick(); });
+  canvas.addEventListener("webglcontextlost", e => { e.preventDefault(); stage.classList.add("nogl"); });
+  resize(); target = cur = progress(); draw(cur); hud();
+  window.__city = { draw: u => { cur = target = u; draw(u); }, lines: lineBuf.n / 2, tris: triBuf.n / 3 };
+})();
+</script>

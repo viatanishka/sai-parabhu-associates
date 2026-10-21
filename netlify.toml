@@ -1,0 +1,22 @@
+# Netlify settings: this is a plain static site, no build step.
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+
+[[headers]]
+  for = "/admin.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-store"
+
+# /admin is easier to type than /admin.html
+[[redirects]]
+  from = "/admin"
+  to = "/admin.html"
+  status = 200

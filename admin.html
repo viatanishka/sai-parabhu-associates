@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin · Sai Prabhu Associates</title>
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Della+Respira&family=Italiana&family=Jost:wght@300;400;500&display=swap">
+<style>
+:root{
+  --bg:#ffffff; --off:#f7f7f5; --mist:#eef0f1;
+  --hair:rgba(21,23,26,.09); --hair-strong:rgba(21,23,26,.18);
+  --grey:#8d9298; --slate:#5a6067; --ink:#15171a;
+  --cyan:#43b7cf; --cyan-ink:#1b8ea7; --cyan-wash:rgba(67,183,207,.1);
+  --ok:#2e8b57; --warn:#b07a1c; --err:#b9574d;
+  --f-display:"Italiana","Didot","Bodoni 72","Times New Roman",serif;
+  --f-text:"Della Respira","Georgia","Times New Roman",serif;
+  --f-label:"Jost","Futura","Century Gothic","Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--off);color:var(--slate);font-family:var(--f-text);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;padding-bottom:env(safe-area-inset-bottom,0px)}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;color:var(--ink);margin:0;line-height:1.1}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:1px solid var(--cyan-ink);outline-offset:3px}
+.label{font-family:var(--f-label);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--grey)}
+.wrap{max-width:1080px;margin-inline:auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--f-label);font-size:.72rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;padding:12px 18px;border:1px solid var(--ink);background:var(--bg);color:var(--ink);cursor:pointer;transition:background .2s,color .2s;white-space:nowrap}
+.btn:hover{background:var(--ink);color:var(--bg)}
+.btn.solid{background:var(--ink);color:var(--bg)}
+.btn.solid:hover{background:#000}
+.btn.small{padding:7px 11px;font-size:.64rem;letter-spacing:.14em;border-color:var(--hair-strong)}
+.btn.small:hover{border-color:var(--ink)}
+.btn.danger{color:var(--err);border-color:rgba(185,87,77,.4)}
+.btn.danger:hover{background:var(--err);color:#fff;border-color:var(--err)}
+.btn[disabled]{opacity:.45;pointer-events:none}
+
+/* login */
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.panel{background:var(--bg);border:1px solid var(--hair);padding:40px 36px;width:min(420px,100%);display:flex;flex-direction:column;gap:22px}
+.panel img{height:38px;width:auto;align-self:flex-start}
+.panel h1{font-size:2.2rem}
+.f{display:flex;flex-direction:column;gap:6px;min-width:0}
+.f input,.f select,.f textarea{font-family:var(--f-text);font-size:1rem;color:var(--ink);background:var(--bg);border:1px solid var(--hair-strong);padding:11px 12px;width:100%;border-radius:0}
+.f textarea{min-height:110px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px var(--cyan-wash)}
+.f .hint{font-size:.85rem;color:var(--grey)}
+.note{font-size:.92rem;padding:10px 12px;border-left:2px solid var(--cyan);background:var(--cyan-wash);color:var(--slate)}
+.note.err{border-color:var(--err);background:rgba(185,87,77,.08);color:var(--err)}
+.note.ok{border-color:var(--ok);background:rgba(46,139,87,.08);color:var(--ok)}
+.linkbtn{background:none;border:0;padding:0;color:var(--cyan-ink);font:inherit;font-size:.92rem;cursor:pointer;text-decoration:underline;align-self:flex-start}
+
+/* app */
+.bar{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);border-bottom:1px solid var(--hair);padding-top:env(safe-area-inset-top,0px)}
+.bar .wrap{display:flex;align-items:center;gap:16px;height:64px}
+.bar img{height:30px;width:auto}
+.bar .who{margin-left:auto;display:flex;align-items:center;gap:10px}
+.bar .who .label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:28vw}
+@media (max-width:600px){.bar .who .label{display:none}.bar img{height:24px}.bar .wrap{gap:10px}.bar .who{gap:6px}}
+.tabs{border-bottom:1px solid var(--hair);background:var(--bg)}
+.tabs .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.tab{font-family:var(--f-label);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;padding:16px 14px 14px;background:none;border:0;border-bottom:2px solid transparent;color:var(--slate);cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.tab[aria-selected="true"]{color:var(--ink);border-color:var(--cyan)}
+.count{font-size:.62rem;letter-spacing:0;background:var(--cyan);color:#fff;border-radius:999px;padding:1px 7px;min-width:20px;text-align:center}
+.count:empty{display:none}
+main{padding-block:32px 80px}
+.head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px}
+.head h2{font-size:2rem}
+.head p{max-width:40em}
+.split{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.split{grid-template-columns:1fr}}
+.card{background:var(--bg);border:1px solid var(--hair);padding:22px;display:flex;flex-direction:column;gap:16px}
+.card h3{font-size:1.45rem}
+.drop{position:relative;border:1px dashed var(--hair-strong);background:var(--off);aspect-ratio:4/3;max-width:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;cursor:pointer;overflow:hidden}
+.drop.doc{aspect-ratio:3/4;max-height:360px}
+.drop:hover,.drop.over{border-color:var(--cyan);background:var(--cyan-wash)}
+.drop img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:var(--bg)}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.row-btns{display:flex;flex-wrap:wrap;gap:10px}
+
+.list{display:flex;flex-direction:column;gap:12px}
+.item{background:var(--bg);border:1px solid var(--hair);display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;padding:12px;align-items:center}
+.item.noimg{grid-template-columns:minmax(0,1fr)}
+.item .thumb{width:96px;aspect-ratio:4/3;object-fit:cover;background:var(--mist);display:block}
+.item.hiddenrow{opacity:.55}
+.item .body{display:flex;flex-direction:column;gap:6px;min-width:0}
+.item .t{font-size:1.1rem;color:var(--ink);overflow-wrap:anywhere}
+.item .acts{display:flex;flex-wrap:wrap;gap:6px}
+.pill{display:inline-block;font-family:var(--f-label);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;padding:2px 8px;border:1px solid var(--hair-strong);color:var(--grey);vertical-align:middle}
+.pill.new{border-color:var(--cyan);color:var(--cyan-ink);background:var(--cyan-wash)}
+.pill.contacted{border-color:rgba(46,139,87,.4);color:var(--ok)}
+.empty{border:1px dashed var(--hair-strong);padding:36px 20px;text-align:center;color:var(--grey);background:var(--bg)}
+
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-family:var(--f-label);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;padding:7px 12px;border:1px solid var(--hair-strong);background:var(--bg);cursor:pointer;color:var(--slate)}
+.chip[aria-pressed="true"]{border-color:var(--ink);color:var(--ink)}
+.enq{background:var(--bg);border:1px solid var(--hair);padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.enq.isnew{border-left:2px solid var(--cyan)}
+.enq .top{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between}
+.enq .name{font-family:var(--f-display);font-size:1.5rem;color:var(--ink)}
+.enq .facts{display:flex;flex-wrap:wrap;gap:6px 22px}
+.enq .facts span{font-size:.95rem}
+.enq .facts b{font-family:var(--f-label);font-weight:400;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--grey);margin-right:6px}
+.enq .msg{white-space:pre-wrap;color:var(--ink);background:var(--off);padding:12px 14px;overflow-wrap:anywhere}
+
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:#fff;font-family:var(--f-label);font-size:.78rem;letter-spacing:.06em;padding:12px 18px;z-index:50;max-width:calc(100% - 32px)}
+.confirm{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:.9rem;color:var(--err)}
+.loading{color:var(--grey);padding:20px 0}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<section class="login" id="viewLogin" hidden>
+  <form class="panel" id="loginForm" novalidate>
+    <img src="assets/logo.png" alt="Sai Prabhu Associates">
+    <div><p class="label">Website admin</p><h1>Sign in</h1></div>
+    <div class="f"><label class="label" for="lEmail">Email</label><input id="lEmail" type="email" autocomplete="username" required></div>
+    <div class="f" id="lPassWrap"><label class="label" for="lPass">Password</label><input id="lPass" type="password" autocomplete="current-password" required></div>
+    <p class="note" id="loginMsg" hidden></p>
+    <button class="btn solid" type="submit" id="loginBtn">Sign in</button>
+    <button class="linkbtn" type="button" id="forgotBtn">Forgot password?</button>
+  </form>
+</section>
+
+<!-- ============ SET NEW PASSWORD (after reset link) ============ -->
+<section class="login" id="viewReset" hidden>
+  <form class="panel" id="resetForm" novalidate>
+    <img src="assets/logo.png" alt="Sai Prabhu Associates">
+    <div><p class="label">Website admin</p><h1>New password</h1></div>
+    <div class="f"><label class="label" for="rPass">New password</label><input id="rPass" type="password" autocomplete="new-password" minlength="8"><span class="hint">At least 8 characters.</span></div>
+    <p class="note" id="resetMsg" hidden></p>
+    <button class="btn solid" type="submit">Save password</button>
+  </form>
+</section>
+
+<!-- ============ NOT ALLOWED ============ -->
+<section class="login" id="viewDenied" hidden>
+  <div class="panel">
+    <img src="assets/logo.png" alt="Sai Prabhu Associates">
+    <h1>No access</h1>
+    <p>You are signed in as <b id="deniedEmail"></b>, but this account isn't allowed to edit the website. Ask the site owner to add this email to the admin list.</p>
+    <button class="btn" type="button" data-signout>Sign out</button>
+  </div>
+</section>
+
+<!-- ============ THE APP ============ -->
+<div id="viewApp" hidden>
+  <header class="bar">
+    <div class="wrap">
+      <img src="assets/logo.png" alt="Sai Prabhu Associates">
+      <div class="who">
+        <span class="label" id="whoEmail"></span>
+        <a class="btn small" href="./" target="_blank" rel="noopener">View site</a>
+        <button class="btn small" type="button" data-signout>Sign out</button>
+      </div>
+    </div>
+  </header>
+  <nav class="tabs" aria-label="Sections">
+    <div class="wrap" role="tablist">
+      <button class="tab" role="tab" data-tab="enquiries" aria-selected="true">Enquiries <span class="count" id="newCount"></span></button>
+      <button class="tab" role="tab" data-tab="projects" aria-selected="false">Projects</button>
+      <button class="tab" role="tab" data-tab="documents" aria-selected="false">Credentials</button>
+      <button class="tab" role="tab" data-tab="testimonials" aria-selected="false">Client quotes</button>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <!-- enquiries -->
+    <section data-panel="enquiries">
+      <div class="head">
+        <div><p class="label">Inbox</p><h2>Enquiries</h2></div>
+        <div class="filters" id="enqFilters">
+          <button class="chip" data-f="new" aria-pressed="true">New</button>
+          <button class="chip" data-f="contacted" aria-pressed="false">Contacted</button>
+          <button class="chip" data-f="closed" aria-pressed="false">Closed</button>
+          <button class="chip" data-f="all" aria-pressed="false">All</button>
+        </div>
+      </div>
+      <div class="list" id="enqList"><p class="loading">Loading…</p></div>
+    </section>
+
+    <!-- content editors are built from the same template -->
+    <section data-panel="projects" hidden></section>
+    <section data-panel="documents" hidden></section>
+    <section data-panel="testimonials" hidden></section>
+  </main>
+</div>
+
+<div class="toast" id="toast" hidden role="status"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="assets/config.js"></script>
+<script>
+const CFG = window.SPA_CONFIG || {};
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+if (!window.supabase) {
+  document.body.innerHTML = '<p style="padding:40px;font-family:sans-serif">Could not load the admin tools. Check the internet connection and refresh the page.</p>';
+  throw new Error("supabase-js missing");
+}
+const sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseKey);
+
+/* ---------- small helpers ---------- */
+let toastTimer;
+function toast(text) { const t = $("#toast"); t.textContent = text; t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => t.hidden = true, 2800); }
+function say(el, text, kind = "") { el.textContent = text; el.className = "note" + (kind ? " " + kind : ""); el.hidden = !text; }
+function show(view) { ["viewLogin", "viewReset", "viewDenied", "viewApp"].forEach(v => $("#" + v).hidden = v !== view); }
+const fileUrl = (bucket, path) => path ? sb.storage.from(bucket).getPublicUrl(path).data.publicUrl : "";
+const when = iso => new Date(iso).toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" });
+function friendly(err) {
+  const m = (err && (err.message || err.error_description || String(err))) || "Something went wrong.";
+  if (/Invalid login/i.test(m)) return "That email and password don't match. Check both and try again.";
+  if (/Email not confirmed/i.test(m)) return "This email hasn't been confirmed yet. In Supabase, open Authentication → Users and confirm it.";
+  if (/row-level security|violates|permission/i.test(m)) return "This account isn't allowed to make that change.";
+  if (/Failed to fetch|NetworkError/i.test(m)) return "Couldn't reach the server. Check the internet connection and try again.";
+  if (/exceeded|too large|Payload/i.test(m)) return "That file is too large. Use a photo under 5 MB.";
+  return m;
+}
+
+/* ---------- sign in / out ---------- */
+$("#loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const email = $("#lEmail").value.trim(), password = $("#lPass").value;
+  const msg = $("#loginMsg");
+  if (!email || !password) return say(msg, "Enter your email and password.", "err");
+  $("#loginBtn").disabled = true; say(msg, "Signing in…");
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  $("#loginBtn").disabled = false;
+  if (error) say(msg, friendly(error), "err"); else say(msg, "");
+});
+$("#forgotBtn").addEventListener("click", async () => {
+  const email = $("#lEmail").value.trim(), msg = $("#loginMsg");
+  if (!email) return say(msg, "Type your email above first, then press “Forgot password?” again.", "err");
+  const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname });
+  say(msg, error ? friendly(error) : "If this email is registered, a reset link is on its way. Open it on this device.", error ? "err" : "ok");
+});
+$("#resetForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const pw = $("#rPass").value, msg = $("#resetMsg");
+  if (pw.length < 8) return say(msg, "Use at least 8 characters.", "err");
+  const { error } = await sb.auth.updateUser({ password: pw });
+  if (error) return say(msg, friendly(error), "err");
+  history.replaceState(null, "", location.pathname);
+  toast("Password saved"); route();
+});
+document.addEventListener("click", async e => {
+  if (!e.target.closest("[data-signout]")) return;
+  await sb.auth.signOut(); show("viewLogin");
+});
+
+let recovering = false;
+sb.auth.onAuthStateChange((event) => {
+  if (event === "PASSWORD_RECOVERY") { recovering = true; show("viewReset"); return; }
+  if (event === "SIGNED_IN" && !recovering) route();
+  if (event === "SIGNED_OUT") show("viewLogin");
+});
+
+let started = false;
+async function route() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) return show("viewLogin");
+  if (recovering) return;
+  const { data: ok, error } = await sb.rpc("is_admin");
+  if (error || !ok) { $("#deniedEmail").textContent = session.user.email; return show("viewDenied"); }
+  $("#whoEmail").textContent = session.user.email;
+  show("viewApp");
+  if (!started) { started = true; buildEditors(); openTab("enquiries"); }
+}
+
+/* ---------- tabs ---------- */
+function openTab(name) {
+  $$(".tab").forEach(t => t.setAttribute("aria-selected", String(t.dataset.tab === name)));
+  $$("[data-panel]").forEach(p => p.hidden = p.dataset.panel !== name);
+  if (name === "enquiries") loadEnquiries(); else EDITORS[name].load();
+}
+$$(".tab").forEach(t => t.addEventListener("click", () => openTab(t.dataset.tab)));
+
+/* =================================================================
+   ENQUIRIES
+   ================================================================= */
+let enqFilter = "new";
+$$("#enqFilters .chip").forEach(c => c.addEventListener("click", () => {
+  enqFilter = c.dataset.f;
+  $$("#enqFilters .chip").forEach(x => x.setAttribute("aria-pressed", String(x === c)));
+  loadEnquiries();
+}));
+async function refreshNewCount() {
+  const { count } = await sb.from("enquiries").select("id", { count: "exact", head: true }).eq("status", "new");
+  $("#newCount").textContent = count ? String(count) : "";
+}
+async function loadEnquiries() {
+  const box = $("#enqList");
+  box.innerHTML = '<p class="loading">Loading…</p>';
+  let q = sb.from("enquiries").select("*").order("created_at", { ascending: false }).limit(200);
+  if (enqFilter !== "all") q = q.eq("status", enqFilter);
+  const { data, error } = await q;
+  refreshNewCount();
+  if (error) { box.innerHTML = `<p class="note err">${esc(friendly(error))}</p>`; return; }
+  if (!data.length) {
+    box.innerHTML = `<div class="empty">${enqFilter === "new" ? "No new enquiries. Messages sent from the website's contact form will appear here." : "Nothing here yet."}</div>`;
+    return;
+  }
+  box.innerHTML = data.map(r => {
+    const digits = (r.phone || "").replace(/\D/g, "");
+    const wa = digits ? `https://wa.me/${digits.length === 10 ? "91" + digits : digits}` : "";
+    return `<article class="enq${r.status === "new" ? " isnew" : ""}" data-id="${r.id}">
+      <div class="top"><span class="name">${esc(r.name)}</span><span><span class="pill ${esc(r.status)}">${esc(r.status)}</span> <span class="label">${esc(when(r.created_at))}</span></span></div>
+      <div class="facts">
+        ${r.phone ? `<span><b>Phone</b><a href="tel:${esc(r.phone)}">${esc(r.phone)}</a></span>` : ""}
+        ${r.service ? `<span><b>Service</b>${esc(r.service)}</span>` : ""}
+        ${r.place ? `<span><b>Plot</b>${esc(r.place)}</span>` : ""}
+      </div>
+      <p class="msg">${esc(r.message)}</p>
+      <div class="acts row-btns">
+        ${wa ? `<a class="btn small" href="${wa}" target="_blank" rel="noopener">WhatsApp</a>` : ""}
+        ${r.phone ? `<a class="btn small" href="tel:${esc(r.phone)}">Call</a>` : ""}
+        ${r.status !== "contacted" ? `<button class="btn small" data-status="contacted">Mark contacted</button>` : ""}
+        ${r.status !== "closed" ? `<button class="btn small" data-status="closed">Close</button>` : ""}
+        ${r.status !== "new" ? `<button class="btn small" data-status="new">Back to new</button>` : ""}
+        <button class="btn small danger" data-del>Delete</button>
+      </div>
+    </article>`;
+  }).join("");
+}
+$("#enqList").addEventListener("click", async e => {
+  const card = e.target.closest(".enq"); if (!card) return;
+  const id = +card.dataset.id;
+  const st = e.target.closest("[data-status]");
+  if (st) {
+    const { error } = await sb.from("enquiries").update({ status: st.dataset.status }).eq("id", id);
+    if (error) return toast(friendly(error));
+    toast("Updated"); loadEnquiries(); return;
+  }
+  if (e.target.closest("[data-del]")) { confirmInline(card.querySelector(".acts"), "Delete this enquiry?", async () => {
+    const { error } = await sb.from("enquiries").delete().eq("id", id);
+    if (error) return toast(friendly(error));
+    toast("Deleted"); loadEnquiries();
+  }); }
+});
+
+function confirmInline(where, question, onYes) {
+  const old = where.innerHTML;
+  where.innerHTML = `<span class="confirm">${esc(question)} <button class="btn small danger" data-yes>Yes, delete</button><button class="btn small" data-no>Cancel</button></span>`;
+  where.querySelector("[data-no]").onclick = ev => { ev.stopPropagation(); where.innerHTML = old; };
+  where.querySelector("[data-yes]").onclick = ev => { ev.stopPropagation(); onYes(); };
+}
+
+/* =================================================================
+   IMAGE PREPARATION — resize, and burn a watermark into credentials
+   ================================================================= */
+function readImage(file) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => resolve({ img, url });
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("This photo format can't be read here. Please use a JPG or PNG photo.")); };
+    img.src = url;
+  });
+}
+async function prepareImage(file, { watermark = false, max = 1800 } = {}) {
+  const { img, url } = await readImage(file);
+  const k = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+  const w = Math.round(img.naturalWidth * k), h = Math.round(img.naturalHeight * k);
+  const c = document.createElement("canvas"); c.width = w; c.height = h;
+  const g = c.getContext("2d");
+  g.fillStyle = "#fff"; g.fillRect(0, 0, w, h);
+  g.drawImage(img, 0, 0, w, h);
+  URL.revokeObjectURL(url);
+  if (watermark) {
+    const text = "SAI PRABHU ASSOCIATES  ·  FOR VERIFICATION ONLY";
+    const size = Math.max(14, Math.round(Math.min(w, h) / 34));
+    g.save();
+    g.translate(w / 2, h / 2); g.rotate(-24 * Math.PI / 180);
+    g.font = `500 ${size}px Jost, Arial, sans-serif`;
+    g.fillStyle = "rgba(27,142,167,0.20)";
+    g.textAlign = "center"; g.textBaseline = "middle";
+    const step = size * 5.2, span = Math.hypot(w, h);
+    for (let y = -span; y < span; y += step) {
+      const off = (Math.round(y / step) % 2) * size * 9;
+      for (let x = -span; x < span; x += g.measureText(text).width + size * 3) g.fillText(text, x + off, y);
+    }
+    g.restore();
+    const band = Math.round(size * 2.2);
+    g.fillStyle = "rgba(255,255,255,0.86)"; g.fillRect(0, h - band, w, band);
+    g.fillStyle = "rgba(21,23,26,0.75)"; g.font = `400 ${Math.round(size * .8)}px Jost, Arial, sans-serif`;
+    g.textAlign = "center"; g.textBaseline = "middle";
+    g.fillText("Sai Prabhu Associates · shown for verification only", w / 2, h - band / 2);
+  }
+  const blob = await new Promise(r => c.toBlob(r, "image/jpeg", 0.85));
+  if (!blob) throw new Error("Couldn't process this photo. Try a different one.");
+  return blob;
+}
+
+/* =================================================================
+   CONTENT EDITORS (projects, credentials, client quotes)
+   ================================================================= */
+const TYPES = {
+  projects: {
+    table: "projects", bucket: "projects", title: "Projects", eyebrow: "Shown in “Selected work”",
+    intro: "Add finished projects with a good photo. The first photo in the list appears first on the website.",
+    image: "photo", imageHint: "A clear, well-lit photo of the finished building. JPG or PNG.",
+    fields: [
+      { k: "title", label: "Project name", req: true, ph: "e.g. Patil Residence" },
+      { k: "type", label: "Type", ph: "Residential, Commercial…", list: ["Residential", "Commercial", "Institutional", "Industrial", "Renovation"] },
+      { k: "place", label: "Location", ph: "e.g. Shirdi" },
+      { k: "year", label: "Year", ph: "e.g. 2024", type: "text", mode: "numeric" },
+    ],
+    line: r => [r.type, r.place, r.year].filter(Boolean).join(" · "),
+  },
+  documents: {
+    table: "documents", bucket: "credentials", title: "Credentials", eyebrow: "Shown under “Credentials”",
+    intro: "Upload degrees, licences and registrations. A “for verification only” watermark is printed into every document automatically.",
+    image: "document", watermark: true, imageHint: "Before uploading, cover ID numbers, signatures and home addresses. JPG or PNG scan or photo.",
+    fields: [
+      { k: "title", label: "Document name", req: true, ph: "e.g. B.E. Civil Engineering" },
+      { k: "issuer", label: "Issued by", ph: "e.g. University / Authority" },
+    ],
+    line: r => r.issuer || "",
+  },
+  testimonials: {
+    table: "testimonials", title: "Client quotes", eyebrow: "Shown under “Clients”",
+    intro: "Add real words from real clients, with their permission. The Clients section appears on the website as soon as the first quote is added.",
+    fields: [
+      { k: "quote", label: "What the client said", req: true, area: true, ph: "Their words, as they said them" },
+      { k: "name", label: "Client name", req: true, ph: "e.g. R. Patil" },
+      { k: "project", label: "Project", ph: "e.g. Residence, Shirdi" },
+    ],
+    line: r => [r.name, r.project].filter(Boolean).join(" · "),
+  },
+};
+const EDITORS = {};
+
+function buildEditors() {
+  for (const [key, T] of Object.entries(TYPES)) {
+    const panel = $(`[data-panel="${key}"]`);
+    panel.innerHTML = `
+      <div class="head"><div><p class="label">${esc(T.eyebrow)}</p><h2>${esc(T.title)}</h2></div><p>${esc(T.intro)}</p></div>
+      <div class="split">
+        <form class="card" novalidate>
+          <h3 data-formtitle>Add new</h3>
+          ${T.image ? `<label class="drop${T.watermark ? " doc" : ""}" data-drop><span data-dropText><span class="label">Choose ${T.image}</span><br><span class="hint">${esc(T.imageHint)}</span></span><img alt="" hidden><input type="file" accept="image/jpeg,image/png,image/webp" data-file aria-label="Choose ${T.image}"></label>` : ""}
+          ${T.fields.map(f => `<div class="f"><label class="label" for="${key}-${f.k}">${esc(f.label)}${f.req ? " *" : ""}</label>
+            ${f.area ? `<textarea id="${key}-${f.k}" data-k="${f.k}" placeholder="${esc(f.ph || "")}"></textarea>`
+                     : `<input id="${key}-${f.k}" data-k="${f.k}" placeholder="${esc(f.ph || "")}" ${f.mode ? `inputmode="${f.mode}"` : ""} ${f.list ? `list="${key}-${f.k}-list"` : ""}>`}
+            ${f.list ? `<datalist id="${key}-${f.k}-list">${f.list.map(o => `<option value="${esc(o)}">`).join("")}</datalist>` : ""}</div>`).join("")}
+          <p class="note" data-msg hidden></p>
+          <div class="row-btns"><button class="btn solid" type="submit" data-save>Add to website</button><button class="btn" type="button" data-cancel hidden>Cancel edit</button></div>
+        </form>
+        <div class="list" data-list><p class="loading">Loading…</p></div>
+      </div>`;
+    EDITORS[key] = makeEditor(key, T, panel);
+  }
+}
+
+function makeEditor(key, T, panel) {
+  const form = panel.querySelector("form"), list = panel.querySelector("[data-list]"), msg = panel.querySelector("[data-msg]");
+  const fileIn = panel.querySelector("[data-file]"), drop = panel.querySelector("[data-drop]");
+  let rows = [], editing = null, chosen = null;
+
+  function setPreview(src) {
+    if (!drop) return;
+    const img = drop.querySelector("img");
+    img.hidden = !src; if (src) img.src = src;
+    drop.querySelector("[data-dropText]").hidden = !!src;
+  }
+  if (fileIn) {
+    fileIn.addEventListener("change", async () => {
+      const f = fileIn.files[0]; if (!f) return;
+      say(msg, "Preparing photo…");
+      try { chosen = await prepareImage(f, { watermark: !!T.watermark }); setPreview(URL.createObjectURL(chosen)); say(msg, ""); }
+      catch (err) { chosen = null; setPreview(""); say(msg, friendly(err), "err"); }
+    });
+    ["dragenter", "dragover"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
+    ["dragleave", "drop"].forEach(ev => drop.addEventListener(ev, () => drop.classList.remove("over")));
+  }
+
+  function resetForm() {
+    form.reset(); editing = null; chosen = null; setPreview("");
+    form.querySelector("[data-formtitle]").textContent = "Add new";
+    form.querySelector("[data-save]").textContent = "Add to website";
+    form.querySelector("[data-cancel]").hidden = true;
+  }
+  form.querySelector("[data-cancel]").addEventListener("click", () => { resetForm(); say(msg, ""); });
+
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const vals = {};
+    for (const f of T.fields) vals[f.k] = form.querySelector(`[data-k="${f.k}"]`).value.trim();
+    const missing = T.fields.filter(f => f.req && !vals[f.k]).map(f => f.label.toLowerCase());
+    if (missing.length) return say(msg, "Please fill in " + missing.join(" and ") + ".", "err");
+    if (T.image && !editing && !chosen) return say(msg, `Choose a ${T.image} first.`, "err");
+    const btn = form.querySelector("[data-save]"); btn.disabled = true;
+    try {
+      let path = editing ? editing.image_path : null, oldPath = null;
+      if (chosen) {
+        say(msg, "Uploading…");
+        const name = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
+        const up = await sb.storage.from(T.bucket).upload(name, chosen, { contentType: "image/jpeg", cacheControl: "31536000" });
+        if (up.error) throw up.error;
+        oldPath = path; path = name;
+      }
+      if (T.image) vals.image_path = path;
+      if (editing) {
+        const { error } = await sb.from(T.table).update(vals).eq("id", editing.id); if (error) throw error;
+        if (oldPath) await sb.storage.from(T.bucket).remove([oldPath]);
+        toast("Saved");
+      } else {
+        vals.sort = rows.length ? Math.min(...rows.map(r => r.sort || 0)) - 1 : 0;   // new items go first
+        const { error } = await sb.from(T.table).insert(vals); if (error) throw error;
+        toast("Added to the website");
+      }
+      resetForm(); say(msg, ""); load();
+    } catch (err) { say(msg, friendly(err), "err"); }
+    btn.disabled = false;
+  });
+
+  async function load() {
+    list.innerHTML = '<p class="loading">Loading…</p>';
+    const { data, error } = await sb.from(T.table).select("*").order("sort").order("created_at", { ascending: false });
+    if (error) { list.innerHTML = `<p class="note err">${esc(friendly(error))}</p>`; return; }
+    rows = data;
+    if (!rows.length) { list.innerHTML = `<div class="empty">Nothing added yet. Use the form to add the first one.</div>`; return; }
+    list.innerHTML = rows.map((r, i) => `<div class="item${T.image ? "" : " noimg"}${r.visible ? "" : " hiddenrow"}" data-i="${i}">
+      ${T.image ? `<img class="thumb" src="${esc(fileUrl(T.bucket, r.image_path))}" alt="" loading="lazy">` : ""}
+      <div class="body">
+        <span class="t">${esc(r.title || r.quote)}${r.visible ? "" : ' <span class="pill">Hidden</span>'}</span>
+        <span class="label">${esc(T.line(r))}</span>
+        <div class="acts">
+          <button class="btn small" data-act="up" ${i === 0 ? "disabled" : ""} aria-label="Move up">↑</button>
+          <button class="btn small" data-act="down" ${i === rows.length - 1 ? "disabled" : ""} aria-label="Move down">↓</button>
+          <button class="btn small" data-act="edit">Edit</button>
+          <button class="btn small" data-act="toggle">${r.visible ? "Hide" : "Show"}</button>
+          <button class="btn small danger" data-act="delete">Delete</button>
+        </div>
+      </div></div>`).join("");
+  }
+
+  list.addEventListener("click", async e => {
+    const b = e.target.closest("[data-act]"); if (!b) return;
+    const item = b.closest(".item"), i = +item.dataset.i, r = rows[i];
+    const act = b.dataset.act;
+    if (act === "edit") {
+      editing = r; chosen = null;
+      for (const f of T.fields) form.querySelector(`[data-k="${f.k}"]`).value = r[f.k] || "";
+      if (T.image) setPreview(fileUrl(T.bucket, r.image_path));
+      form.querySelector("[data-formtitle]").textContent = "Edit";
+      form.querySelector("[data-save]").textContent = "Save changes";
+      form.querySelector("[data-cancel]").hidden = false;
+      say(msg, T.image ? `Choose a new ${T.image} only if you want to replace it.` : "");
+      form.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    if (act === "toggle") {
+      const { error } = await sb.from(T.table).update({ visible: !r.visible }).eq("id", r.id);
+      if (error) return toast(friendly(error));
+      toast(r.visible ? "Hidden from the website" : "Shown on the website"); load(); return;
+    }
+    if (act === "up" || act === "down") {
+      const j = act === "up" ? i - 1 : i + 1; if (j < 0 || j >= rows.length) return;
+      const order = rows.map(x => x.id); [order[i], order[j]] = [order[j], order[i]];
+      const changes = order.map((id, n) => ({ id, n })).filter(({ id, n }) => rows.find(x => x.id === id).sort !== n);
+      const results = await Promise.all(changes.map(({ id, n }) => sb.from(T.table).update({ sort: n }).eq("id", id)));
+      const bad = results.find(x => x.error); if (bad) return toast(friendly(bad.error));
+      load(); return;
+    }
+    if (act === "delete") {
+      confirmInline(item.querySelector(".acts"), "Delete permanently?", async () => {
+        const { error } = await sb.from(T.table).delete().eq("id", r.id);
+        if (error) return toast(friendly(error));
+        if (T.image && r.image_path) await sb.storage.from(T.bucket).remove([r.image_path]);
+        if (editing && editing.id === r.id) resetForm();
+        toast("Deleted"); load();
+      });
+    }
+  });
+
+  return { load };
+}
+
+route();
+</script>
+</body>
+</html>
